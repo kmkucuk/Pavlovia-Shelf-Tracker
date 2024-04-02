@@ -6,6 +6,12 @@ shelf_names = ['list','experimentRegistry','performanceRegistry','fitClashRegist
 var shelves = {}
 var added_shelves = {}
 
+
+// IMPORTANT INFO ABOUT PATHING
+// path for "require" (to load json) does not need the path of the parent folder (i.e. check_overlapping_ids)
+// however, paths for creating another folder requires the name of the parent folder in the path 
+
+
 for (currentShelf of shelf_names){
     // console.log(currentShelf)
     shelfPath = '.\\existing_shelves\\' + currentShelf +'.json'
@@ -97,7 +103,7 @@ if (noOverlap){
         console.log(combined_shelves)
         console.log(combined_shelves[currentShelf])
         
-        shelfPath = '.\\combined_shelves\\'+folderName+'\\'
+        shelfPath = '.\\check_overlapping_ids\\combined_shelves\\'+folderName+'\\'
 
         // generate the folder for this date if it does not exists
         if (!fs.existsSync(shelfPath)){

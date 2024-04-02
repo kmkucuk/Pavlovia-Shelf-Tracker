@@ -123,7 +123,7 @@ const folderName = currentDay.toString()+currentMonth+currentYear.toString()
 
 for (currentShelf of shelf_names){
         
-  shelfPath = '.\\generated_shelves\\'+folderName+'\\'
+  shelfPath = '.\\generate_ids\\generated_shelves\\'+folderName+'\\'
   // generate the folder for this date if it does not exists
   if (!fs.existsSync(shelfPath)){
     fs.mkdirSync(shelfPath);  }
