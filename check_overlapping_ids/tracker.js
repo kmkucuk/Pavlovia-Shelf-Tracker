@@ -35,7 +35,7 @@ var match_object = {}
 noOverlap = 1
 
 
-var overlappindParticipants = []
+var overlappingParticipants = []
 for (currentShelf of shelf_names){
     
     existing_ids = Object.keys(shelves[currentShelf])
@@ -55,7 +55,7 @@ for (currentShelf of shelf_names){
         if (existing_ids.includes(currentID)){
 
             match_object[currentID][currentShelf] = "overlap"
-            overlappindParticipants.push(currentID)
+            overlappingParticipants.push(currentID)
             noOverlap = 0
         } else {
 
@@ -64,7 +64,7 @@ for (currentShelf of shelf_names){
         }
             
 
-    }
+    }   
 
 }
 
@@ -81,14 +81,12 @@ currentMonth = months[d.getMonth()];
 // get current year
 currentYear = d.getFullYear()
 
-
 const folderName = currentDay.toString()+currentMonth+currentYear.toString()
-
 
 var combined_shelves = {} 
 
-
 Object.assign(combined_shelves,shelves)
+
 
 // console.log(combined_shelves)
 
@@ -100,8 +98,8 @@ if (noOverlap){
 
         Object.assign(combined_shelves[currentShelf],added_shelves[currentShelf])
         
-        console.log(combined_shelves)
-        console.log(combined_shelves[currentShelf])
+        //console.log(combined_shelves)
+        //console.log(combined_shelves[currentShelf])
         
         shelfPath = '.\\check_overlapping_ids\\combined_shelves\\'+folderName+'\\'
 
@@ -128,6 +126,6 @@ if (noOverlap){
     // throw an error due to overlap in IDs
     console.error('Shelf merge failed due to overlap, check .csv file for the following overlapping IDs:');
     // print out overlapping IDs just once 
-    console.error(JSON.stringify(...new Set(overlappindParticipants)))
+    console.error(JSON.stringify([...new Set(overlappingParticipants)]))    
 
 }
