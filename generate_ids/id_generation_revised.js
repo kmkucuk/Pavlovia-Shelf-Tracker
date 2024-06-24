@@ -23,6 +23,16 @@ ids.district_id = []
 ids.cbpasssage  = []
 ids.cbspacing   = []
 ids.cbtime      = []
+
+
+var rowcount = XLSX.utils.decode_range(worksheet['!ref']);
+
+console.log('sheet length: ', rowcount)
+
+var lastRow = 500
+
+printLastIDOnce = 1
+
 // Loop through the worksheet to extract values from the first column
 for (let rowIndex = 2; rowIndex < 77; rowIndex++) {
   const id_cell             = worksheet[`B${rowIndex}`]; // Assuming the values are in column A (adjust as needed)
@@ -32,10 +42,25 @@ for (let rowIndex = 2; rowIndex < 77; rowIndex++) {
   const cbspa_cell          = worksheet[`G${rowIndex}`];
   const cbtim_cell          = worksheet[`H${rowIndex}`];
   if (!id_cell || !id_cell.v) {
+
+    // print previous ID before empty ID cell - which is the last ID available 
+    if (printLastIDOnce){
+
+      lastID  = worksheet[`B${rowIndex-1}`]
+      console.log('last ID: ',lastID.v)
+      printLastIDOnce = 0 
+
+    }
+    
+
     // Break when there are no more values in the first column
     continue;
   }
+  if (rowIndex === 2) {
 
+    console.log('first ID: ',id_cell.v)
+
+  }
   ids["sub_id"].push(id_cell.v);
   ids["district_id"].push(districtid_cell.v);
   ids["teacher_id"].push(teacherid_cell.v);  
@@ -82,19 +107,6 @@ for (var i = 0; i < ids["sub_id"].length; i++){
 
 }
 
-
-// console.log("ID LIST")
-// console.log(JSON.stringify(ch_list))
-// console.log("\nATTEMPT REGISTRY")
-// console.log(JSON.stringify(ch_attemptRegistry))
-// console.log("\nFIT CLASH REGISTRY")
-// console.log(JSON.stringify(ch_fitClashRegistry))
-// console.log("\nEXPERIMENT REGISTRY")
-// console.log(JSON.stringify(ch_experimentRegistry))
-// console.log("\nPERFORMANCE REGISTRY")
-// console.log(JSON.stringify(ch_performanceRegistry))
-
-
 shelves["list"] = ch_list
 shelves["experimentRegistry"] = ch_experimentRegistry
 shelves["performanceRegistry"] = ch_performanceRegistry
@@ -116,14 +128,11 @@ currentMonth = months[d.getMonth()];
 // get current year
 currentYear = d.getFullYear()
 
-
 const folderName = currentDay.toString()+currentMonth+currentYear.toString()
-
-
 
 for (currentShelf of shelf_names){
         
-  shelfPath = '.\\generate_ids\\generated_shelves\\'+folderName+'\\'
+  shelfPath = '.\\generated_shelves\\'+folderName+'\\'
   // generate the folder for this date if it does not exists
   if (!fs.existsSync(shelfPath)){
     fs.mkdirSync(shelfPath);  }

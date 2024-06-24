@@ -22,9 +22,6 @@ for (currentShelf of shelf_names){
     added_shelves[currentShelf] = require(shelfPath)
 }
 
-
-
-
 // loop over keys to find if one of added IDs exist in existing shelves
 var match_object = {}
 
@@ -72,12 +69,16 @@ for (currentShelf of shelf_names){
 
 // initialize months as a vector for date save
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
 // initialize date variable for retrieving month info
 const d = new Date();
+
 // get day of the month (1-31)
 currentDay = d.getDate()
+
 // get month of the year as text ("april" etc.)
 currentMonth = months[d.getMonth()];
+
 // get current year
 currentYear = d.getFullYear()
 
@@ -92,6 +93,7 @@ Object.assign(combined_shelves,shelves)
 
 // if there was no overlap, merge existing and added shelves here
 if (noOverlap){
+
     // combine existing and added shelves using deep merge function    
 
     for (currentShelf of shelf_names){
@@ -100,7 +102,7 @@ if (noOverlap){
         
         //console.log(combined_shelves)
         //console.log(combined_shelves[currentShelf])
-        
+         
         shelfPath = '.\\check_overlapping_ids\\combined_shelves\\'+folderName+'\\'
 
         // generate the folder for this date if it does not exists
@@ -123,8 +125,10 @@ if (noOverlap){
 
 
 } else {
+
     // throw an error due to overlap in IDs
     console.error('Shelf merge failed due to overlap, check .csv file for the following overlapping IDs:');
+
     // print out overlapping IDs just once 
     console.error(JSON.stringify([...new Set(overlappingParticipants)]))    
 
